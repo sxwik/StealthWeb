@@ -1,2 +1,2 @@
-# StealthWeb
-Browser that wipes identity every 30 seconds.
+# StealthWeb Phase 2
+Full fingerprint spoofing active.

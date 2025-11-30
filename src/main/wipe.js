@@ -1,4 +1,3 @@
-
 const { session } = require('electron');
 const fs = require('fs');
 const path = require('path');
@@ -17,4 +16,5 @@ function clearAll() {
     ses.clearCache();
     log("All browser data wiped.");
 }
+
 module.exports = { clearAll };
