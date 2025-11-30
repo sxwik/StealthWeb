@@ -1,0 +1,10 @@
+[
+  {
+    "userAgent": "Mozilla/5.0 Chrome/120",
+    "timezone": "Asia/Kolkata"
+  },
+  {
+    "userAgent": "Mozilla/5.0 Firefox/118",
+    "timezone": "Europe/London"
+  }
+]

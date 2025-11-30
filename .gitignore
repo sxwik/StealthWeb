@@ -1,0 +1,7 @@
+node_modules/
+build/
+.DS_Store
+logs/
+temp/
+cache/
+config/*.local.json
