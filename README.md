@@ -1,1 +1,1 @@
-StealthWeb Phase 5 – Real Navigation Controls
+StealthWeb Phase 6 – Tab Closing, Favicon, Titles, Animations

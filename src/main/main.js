@@ -14,7 +14,6 @@ function createMainWindow() {
         backgroundColor: "#000000",
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: false,
             contextIsolation: true
         }
     });
@@ -23,7 +22,7 @@ function createMainWindow() {
     return mainWindow;
 }
 
-function createTab(url = "https://google.com") {
+function createTab(url = "https://www.google.com") {
     const view = new BrowserView({
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -33,6 +32,14 @@ function createTab(url = "https://google.com") {
 
     const id = Date.now();
     tabs.push({ id, view });
+
+    view.webContents.on("page-title-updated", (_, title) => {
+        mainWindow.webContents.send("update-tab-title", { id, title });
+    });
+
+    view.webContents.on("page-favicon-updated", (_, favs) => {
+        mainWindow.webContents.send("update-tab-favicon", { id, icon: favs[0] });
+    });
 
     switchTab(id);
     view.webContents.loadURL(url);
@@ -50,7 +57,30 @@ function switchTab(id) {
     mainWindow.setBrowserView(tab.view);
     tab.view.setBounds({ x: 0, y: 95, width: 1300, height: 805 });
 
+    mainWindow.webContents.send("set-active-tab", id);
     mainWindow.webContents.send("update-url", tab.view.webContents.getURL());
+}
+
+function closeTab(id){
+    const index = tabs.findIndex(t => t.id === id);
+    if(index === -1) return;
+
+    const closing = tabs[index];
+
+    tabs.splice(index,1);
+
+    if(tabs.length === 0){
+        const newID = createTab();
+        mainWindow.webContents.send("add-tab", newID);
+        return;
+    }
+
+    if(activeTab.id === id){
+        const next = tabs[index] || tabs[index-1];
+        switchTab(next.id);
+    }
+
+    mainWindow.webContents.send("remove-tab", id);
 }
 
 ipcMain.on("new-tab", () => {
@@ -58,9 +88,10 @@ ipcMain.on("new-tab", () => {
     mainWindow.webContents.send("add-tab", id);
 });
 
-ipcMain.on("switch-tab", (e, id) => switchTab(id));
+ipcMain.on("switch-tab", (_, id) => switchTab(id));
+ipcMain.on("close-tab", (_, id) => closeTab(id));
 
-ipcMain.on("navigate", (e, url) => {
+ipcMain.on("navigate", (_, url) => {
     if (!activeTab) return;
     if (!url.startsWith("http")) url = "https://" + url;
     activeTab.view.webContents.loadURL(url);
