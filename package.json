@@ -1,6 +1,6 @@
 
 {
-  "name": "stealthweb-beta",
+  "name": "stealthweb-tor",
   "version": "1.0.0",
   "main": "src/main/main.js",
   "scripts": { "start": "electron ." },
