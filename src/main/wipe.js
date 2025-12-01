@@ -3,11 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const LOG_FILE = path.join(__dirname, '../../logs/stealthweb.log');
-function log(msg) {
-    fs.appendFileSync(LOG_FILE, `[${new Date().toISOString()}] ${msg}\n`);
-}
+function log(msg){ fs.appendFileSync(LOG_FILE, `[${new Date().toISOString()}] ${msg}\n`); }
 
-function clearAll() {
+function clearAll(){
     const ses = session.defaultSession;
     ses.clearStorageData({ storages:[
         "cookies","localstorage","cachestorage","indexdb",
@@ -16,5 +14,4 @@ function clearAll() {
     ses.clearCache();
     log("All browser data wiped.");
 }
-
 module.exports = { clearAll };

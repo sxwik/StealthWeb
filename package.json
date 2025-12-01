@@ -1,13 +1,8 @@
 {
-  "name": "stealthweb",
+  "name": "stealthweb-beta",
   "version": "1.0.0",
-  "description": "StealthWeb – A browser that resets its identity every 30 seconds.",
+  "description": "StealthWeb Beta – AMOLED + Chrome UI",
   "main": "src/main/main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-packager . StealthWeb --platform=win32 --arch=x64"
-  },
-  "dependencies": {
-    "electron": "^31.0.0"
-  }
+  "scripts": { "start": "electron ." },
+  "dependencies": { "electron": "^31.0.0" }
 }

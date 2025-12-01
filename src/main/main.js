@@ -4,20 +4,19 @@ const wipe = require('./wipe');
 const fp = require('./fingerprint');
 const fs = require('fs');
 
-const VERSION = "1.0.0";
+const VERSION = "BETA 1.0";
 const LOG_FILE = path.join(__dirname, '../../logs/stealthweb.log');
 
 function log(msg) {
-    const full = `[${new Date().toISOString()}] ${msg}\n`;
-    fs.appendFileSync(LOG_FILE, full);
-    console.log(full);
+    fs.appendFileSync(LOG_FILE, `[${new Date().toISOString()}] ${msg}\n`);
 }
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1200,
-        height: 800,
-        title: `StealthWeb v${VERSION}`,
+        width: 1300,
+        height: 900,
+        title: `STEALTHWEB BETA`,
+        backgroundColor: "#000000",
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
@@ -25,9 +24,7 @@ function createWindow() {
         }
     });
 
-    win.loadFile(path.join(__dirname, '../renderer/index.html'));
-    fp.applyRandomFingerprint(win);
-    log("Applied random fingerprint.");
+    win.loadFile(path.join(__dirname, '../renderer/home.html'));
 
     setInterval(() => {
         wipe.clearAll();
