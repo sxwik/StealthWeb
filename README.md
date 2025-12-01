@@ -1,2 +1,1 @@
-# STEALTHWEB BETA
-AMOLED + Chrome UI Version
+StealthWeb Phase 4 Chrome Tabs

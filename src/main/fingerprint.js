@@ -1,4 +1,2 @@
-const fingerprints = require('../../config/fingerprints.json');
-function random(){ return fingerprints[Math.floor(Math.random()*fingerprints.length)]; }
-function applyRandomFingerprint(win){ win.webContents.setUserAgent(random().userAgent); }
-module.exports = { applyRandomFingerprint };
+const fp=[{"userAgent":"Mozilla/5.0 Chrome","timezone":"Asia/Tokyo"}];
+module.exports={applyRandomFingerprint:win=>win.webContents.setUserAgent(fp[0].userAgent)};

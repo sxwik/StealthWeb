@@ -1,7 +1,6 @@
 {
   "name": "stealthweb-beta",
   "version": "1.0.0",
-  "description": "StealthWeb Beta – AMOLED + Chrome UI",
   "main": "src/main/main.js",
   "scripts": { "start": "electron ." },
   "dependencies": { "electron": "^31.0.0" }
