@@ -1,9 +1,13 @@
-// keeps Phase 2 spoofing
-(() => {
-    const toDataURL = HTMLCanvasElement.prototype.toDataURL;
-    HTMLCanvasElement.prototype.toDataURL = function() {
-        const ctx = this.getContext('2d');
-        if(ctx){ ctx.fillStyle='rgba(255,0,0,0.01)'; ctx.fillRect(0,0,1,1); }
-        return toDataURL.apply(this, arguments);
-    };
-})();
+
+const { contextBridge, ipcRenderer } = require("electron");
+
+contextBridge.exposeInMainWorld("stealth", {
+    newTab: () => ipcRenderer.send("new-tab"),
+    switchTab: id => ipcRenderer.send("switch-tab", id),
+    go: url => ipcRenderer.send("navigate", url),
+    back: () => ipcRenderer.send("nav-back"),
+    forward: () => ipcRenderer.send("nav-forward"),
+    reload: () => ipcRenderer.send("nav-reload"),
+    onURL: cb => ipcRenderer.on("update-url", (e, url) => cb(url)),
+    onAddTab: cb => ipcRenderer.on("add-tab", (e, id) => cb(id))
+});
